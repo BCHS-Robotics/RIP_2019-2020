@@ -29,16 +29,16 @@ public class BasicAutonomous extends LinearOpMode {
         waitForStart();
 
         robot.frontLeftDrive.setPower(.4);
-        robot.frontRightDrive.setPower(.4);
-        robot.backLeftDrive.setPower(.4);
+        robot.frontRightDrive.setPower(-.4);
+        robot.backLeftDrive.setPower(-.4);
         robot.backRightDrive.setPower(.4);
 
-        sleep(400);
+        sleep(800);
 
-        robot.frontLeftDrive.setPower(-.4);
-        robot.backRightDrive.setPower(-.4);
+        robot.frontRightDrive.setPower(.4);
+        robot.backLeftDrive.setPower(.4);
 
-        sleep(5000);
+        sleep(1000);
 
         robot.frontLeftDrive.setPower(0);
         robot.frontRightDrive.setPower(0);

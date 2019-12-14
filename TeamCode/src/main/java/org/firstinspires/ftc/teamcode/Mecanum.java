@@ -25,7 +25,7 @@ public class Mecanum extends OpMode
     private Servo claw = null;
     private Servo clipper = null;
     private DcMotor shoulder = null;
-
+    private CRServo armSlide = null;
 
     double drive;
     double strafe;
@@ -59,6 +59,9 @@ public class Mecanum extends OpMode
         clipper = hardwareMap.get(Servo.class, "clipper");
 
         shoulder = hardwareMap.get(DcMotor.class, "shoulder");
+        armSlide = hardwareMap.get(CRServo.class, "armSlide");
+
+        shoulder.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
     @Override
@@ -72,10 +75,10 @@ public class Mecanum extends OpMode
         strafe = gamepad1.left_stick_x;
         turn = gamepad1.right_stick_x;
 
-        FLPower = Range.clip(drive + turn - strafe, -1.0, 1.0);
-        FRPower = Range.clip(drive - turn + strafe, -1.0, 1.0);
-        BLPower = Range.clip(drive + turn + strafe, -1.0, 1.0);
-        BRPower = Range.clip(drive - turn - strafe, -1.0, 1.0);
+        FLPower = Range.clip(drive + turn + strafe, -1.0, 1.0);
+        FRPower = Range.clip(drive - turn - strafe, -1.0, 1.0);
+        BLPower = Range.clip(drive + turn - strafe, -1.0, 1.0);
+        BRPower = Range.clip(drive - turn + strafe, -1.0, 1.0);
 
         frontLeft.setPower(FLPower);
         frontRight.setPower(FRPower);
@@ -83,9 +86,9 @@ public class Mecanum extends OpMode
         backRight.setPower(BRPower);
 
         if(gamepad2.left_bumper)
-            claw.setPosition(.3);
+            claw.setPosition(.95);
         else if(gamepad2.right_bumper)
-            claw.setPosition(.75);
+            claw.setPosition(.3);
 
         if(gamepad2.x)
             clipper.setPosition(0);
@@ -94,7 +97,14 @@ public class Mecanum extends OpMode
 
         slide.setPower(gamepad2.left_trigger - gamepad2.right_trigger);
 
-        shoulder.setPower(.8*-gamepad2.left_stick_y);
+        shoulder.setPower(.8*gamepad2.right_stick_y);
+
+        if(gamepad2.dpad_up)
+            armSlide.setPower(-1);
+        else if(gamepad2.dpad_down)
+            armSlide.setPower(1);
+        else
+            armSlide.setPower(0.378);
 
         telemetry.addData("Runtime", runtime.toString());
     }

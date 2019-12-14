@@ -24,17 +24,17 @@ public class BasicAutonomous2 extends LinearOpMode {
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
-        robot.frontLeftDrive.setPower(.4);
+        robot.frontLeftDrive.setPower(-.4);
         robot.frontRightDrive.setPower(.4);
         robot.backLeftDrive.setPower(.4);
+        robot.backRightDrive.setPower(-.4);
+
+        sleep(800);
+
+        robot.frontLeftDrive.setPower(.4);
         robot.backRightDrive.setPower(.4);
 
-        sleep(400);
-
-        robot.frontRightDrive.setPower(-.4);
-        robot.backLeftDrive.setPower(-.4);
-
-        sleep(5000);
+        sleep(1000);
 
         robot.frontLeftDrive.setPower(0);
         robot.frontRightDrive.setPower(0);
